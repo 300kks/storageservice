@@ -13,6 +13,7 @@ import reactor.core.publisher.Mono;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.util.LinkedList;
 import java.util.List;
@@ -27,17 +28,15 @@ public class ObjectServiceImpl implements ObjectService {
     public PutObjectResult uploadObject(String bucketName, FilePart parts) {
         List<ByteBuffer> bytesList = new LinkedList<>();
         parts.content().subscribe(item -> bytesList.add(item.asByteBuffer()));
-        int totalBytes = bytesList.stream().mapToInt(item -> item.capacity()).sum();
+        int totalBytes = bytesList.stream().mapToInt(Buffer::capacity).sum();
         ByteBuffer buffer = ByteBuffer.allocate(totalBytes);
-        bytesList.stream().forEach(byteBuff -> buffer.put(byteBuff));
+        bytesList.forEach(buffer::put);
 
-        PutObjectResult putObjectResult = amazonS3.putObject(
+        return amazonS3.putObject(
                 bucketName,
                 parts.filename(),
                 new ByteArrayInputStream(buffer.array()),
                 new ObjectMetadata());
-
-        return putObjectResult;
     }
 
     @Override
