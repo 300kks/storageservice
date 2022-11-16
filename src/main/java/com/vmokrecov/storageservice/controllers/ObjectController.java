@@ -4,7 +4,7 @@ import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.PutObjectResult;
 import com.vmokrecov.storageservice.dto.BucketDTO;
 import com.vmokrecov.storageservice.services.ObjectService;
-import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,7 +20,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/object")
 @AllArgsConstructor
-@Api(tags = "ObjectController admin", description = "ObjectController description")
+@Tag(name = "ObjectController admin", description = "ObjectController description")
 public class ObjectController {
 
     private final ObjectService objectService;

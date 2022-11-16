@@ -3,7 +3,7 @@ package com.vmokrecov.storageservice.controllers;
 import com.amazonaws.services.s3.model.Bucket;
 import com.vmokrecov.storageservice.dto.BucketDTO;
 import com.vmokrecov.storageservice.services.BucketService;
-import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/bucket")
 @AllArgsConstructor
-@Api(tags = "BucketController admin", description = "BucketController description")
+@Tag(name = "BucketController admin", description = "BucketController description")
 public class BucketController {
 
     private final BucketService bucketService;
